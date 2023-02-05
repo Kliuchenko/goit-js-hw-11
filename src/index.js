@@ -39,7 +39,7 @@ let callback = (entries, observer) => {
             "We're sorry, but this is end."
           );
         }
-      }).finally(Loading.remove(1000));
+      }).finally(Loading.remove());
     }
   });
 };
@@ -85,13 +85,11 @@ function onSubmitGetValue(e) {
 
       gallerySL.on('show.simplelightbox');
       gallerySL.refresh();
-
-      alerts(total, value);
     })
-    .finally(Loading.remove(1000))
     .catch(error => {
       Notify.failure(error.message);
-    });
+    })
+    .finally(Loading.remove());
 }
 
 function ifNoValue(value) {
@@ -110,16 +108,4 @@ function checkImages(total) {
   }
 }
 
-function alerts(total, value) {
-  if (total > 40) {
-    Notify.success(`We found ${total} images of "${value}".`);
-  }
-
-  if (total <= 40) {
-    refs.loadMoreBtn.classList.add('is-hidden');
-    Notify.warning(
-      `Sorry, there are only ${total} images matching your search query.`
-    );
-  }
-}
 refs.form.addEventListener('submit', onSubmitGetValue);
